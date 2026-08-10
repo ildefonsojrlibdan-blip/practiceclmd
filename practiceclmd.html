@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLMD | DepEd Region XII – SOCCSKSARGEN</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Poppins:wght@500;600&amp;display=swap');
+        
+        :root {
+            --primary-purple: #5C2D91;
+            --dark-purple: #3D1F5C;
+            --light-purple: #EDE4F5;
+            --accent-gold: #C9A227;
+            --accent-gold-light: #E8D48A;
+            --text-dark: #2C2C2C;
+            --text-muted: #6B7280;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .font-poppins {
+            font-family: 'Poppins', system_ui, sans-serif;
+        }
+
+        /* Header & Navbar */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+            box-shadow: 0 4px 12px rgba(92, 45, 145, 0.15);
+            padding: 0.75rem 0;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .deped-logo {
+            width: 58px;
+            height: 58px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            flex-shrink: 0;
+            border: 3px solid var(--accent-gold);
+        }
+        
+        .deped-logo svg {
+            width: 42px;
+            height: 42px;
+        }
+        
+        .navbar-brand .brand-text {
+            color: white;
+            line-height: 1.1;
+        }
+        
+        .navbar-brand .brand-text h1 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -.5px;
+        }
+        
+        .navbar-brand .brand-text .sub {
+            font-size: 0.78rem;
+            font-weight: 500;
+            opacity: 0.95;
+            margin-top: -2px;
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.92) !important;
+            font-weight: 500;
+            padding: 0.6rem 1.05rem !important;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-gold) !important;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+        }
+        
+        .nav-link i {
+            margin-right: 6px;
+            width: 18px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(60, 31, 92, 0.82), rgba(92, 45, 145, 0.75)), url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221200%22 height=%22600%22 viewBox=%220 0 1200 600%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%22100%25%22%3E%3Cstop offset=%220%25%22 stop-color=%22%235C2D91%22/%3E%3Cstop offset=%22100%25%22 stop-color=%22%233D1F5C%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill=%22url(%23g)%22 width=%221200%22 height=%22600%22/%3E%3C/svg%3E') center/cover no-repeat;
+            padding: 4.5rem 0;
+            color: white;
+            position: relative;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 110px;
+            background: linear-gradient(transparent, rgba(255,255,255,0.08));
+        }
+        
+        .hero h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 0.75rem;
+        }
+        
+        .hero .lead {
+            font-size: 1.15rem;
+            max-width: 580px;
+            opacity: 0.95;
+        }
+        
+        .section-header {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-header h2 {
+            font-weight: 700;
+            color: var(--primary-purple);
+            font-size: 1.85rem;
+            margin-bottom: 0.35rem;
+        }
+        
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 65px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-purple), var(--accent-gold));
+            border-radius: 4px;
+        }
+
+        /* Cards */
+        .gov-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(92, 45, 145, 0.09);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .gov-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 28px rgba(92, 45, 145, 0.13);
+        }
+        
+        .gov-card .card-header {
+            background: var(--light-purple);
+            border-bottom: 1px solid #d4c9e4;
+            padding: 0.85rem 1.25rem;
+            font-weight: 600;
+            color: var(--primary-purple);
+        }
+        
+        .learning-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e5d9f0;
+        }
+        
+        .learning-card:hover {
+            border-color: var(--primary-purple);
+            box-shadow: 0 10px 20px rgba(92, 45, 145, 0.12);
+        }
+        
+        .learning-card .icon-wrapper {
+            width: 52px;
+            height: 52px;
+            background: var(--light-purple);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-purple);
+            font-size: 1.55rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Messages */
+        .message-card {
+            border-radius: 14px;
+            transition: transform 0.3s ease;
+        }
+        
+        .message-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .message-photo {
+            width: 92px;
+            height: 92px;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message-header {
+            background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+            color: white;
+            padding: 1.25rem 1.5rem;
+            border-radius: 14px 14px 0 0;
+        }
+
+        /* Tabs */
+        .nav-tabs-custom {
+            border-bottom: 2px solid #e5d9f0;
+        }
+        
+        .nav-tabs-custom .nav-link {
+            color: #555;
+            font-weight: 600;
+            padding: 0.75rem 1.35rem;
+            border: none;
+            margin-bottom: -2px;
+            position: relative;
+        }
+        
+        .nav-tabs-custom .nav-link.active {
+            color: var(--primary-purple);
+            background: transparent;
+            border-bottom: 3px solid var(--primary-purple);
+        }
+
+        /* Data Analytics */
+        .dashboard-card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(92, 45, 145, 0.1);
+            padding: 1.5rem;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.15rem 1.35rem;
+            box-shadow: 0 4px 12px rgba(92, 45, 145, 0.08);
+            border: 1px solid #f0e8f9;
+        }
+        
+        .metric-value {
+            font-size: 1.85rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--primary-purple);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 260px;
+            width: 100%;
+        }
+        
+        .demo-badge {
+            background-color: #f8d7da;
+            color: #842029;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.55rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn-purple {
+            background-color: var(--primary-purple);
+            color: white;
+            border: none;
+            padding: 0.55rem 1.35rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-purple:hover {
+            background-color: var(--dark-purple);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .btn-gold {
+            background-color: var(--accent-gold);
+            color: #2C2C2C;
+            font-weight: 600;
+            border: none;
+            padding: 0.55rem 1.35rem;
+            border-radius: 8px;
+        }
+        
+        .btn-gold:hover {
+            background-color: #b38f1e;
+            color: #2C2C2C;
+        }
+
+        /* Learning Modal */
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+            color: white;
+        }
+        
+        .modal-header .btn-close {
+            filter: invert(1);
+        }
+        
+        .learning-tab-content {
+            max-height: 420px;
+            overflow-y: auto;
+        }
+
+        /* Updates */
+        .update-item {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid var(--primary-purple);
+            background: white;
+            margin-bottom: 0.85rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        
+        .update-item:hover {
+            box-shadow: 0 4px 12px rgba(92, 45, 145, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-purple);
+            color: #d1c3e2;
+        }
+        
+        .footer-link {
+            color: #d1c3e2;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-brand .brand-text h1 {
+                font-size: 0.95rem;
+            }
+            .navbar-brand .brand-text .sub {
+                font-size: 0.7rem;
+            }
+            .deped-logo {
+                width: 46px;
+                height: 46px;
+            }
+        }
+        
+        .stat-pill {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.65rem;
+            background: var(--light-purple);
+            color: var(--primary-purple);
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .sdo-row:hover {
+            background-color: #f8f4fb;
+        }
+        
+        .gold-accent {
+            color: var(--accent-gold);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand" href="#">
+                <div class="deped-logo">
+                    <!-- DepEd Region XII SVG Logo -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42" fill="none">
+                        <!-- Outer circle -->
+                        <circle cx="21" cy="21" r="20" fill="#5C2D91"/>
+                        <!-- Inner design -->
+                        <circle cx="21" cy="21" r="15.5" fill="#FFFFFF"/>
+                        <circle cx="21" cy="21" r="12" fill="#5C2D91"/>
+                        
+                        <!-- Book / Education symbol -->
+                        <rect x="13" y="15" width="16" height="13" rx="1.5" fill="#FFFFFF"/>
+                        <path d="M16 18.5 L26 18.5" stroke="#5C2D91" stroke-width="1.4"/>
+                        <path d="M16 21.5 L26 21.5" stroke="#5C2D91" stroke-width="1.4"/>
+                        <path d="M16 24.5 L23 24.5" stroke="#5C2D91" stroke-width="1.4"/>
+                        
+                        <!-- Gold accent ring -->
+                        <circle cx="21" cy="21" r="20" fill="none" stroke="#C9A227" stroke-width="2.5"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>DepEd Region XII</h1>
+                    <div class="sub">SOCCSKSARGEN</div>
+                </div>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#updates"><i class="fas fa-newspaper me-1"></i> Updates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#messages"><i class="fas fa-envelope me-1"></i> Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#learning-areas"><i class="fas fa-book me-1"></i> Learning Areas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#data-analytics"><i class="fas fa-chart-bar me-1"></i> Data Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#programs"><i class="fas fa-tasks me-1"></i> Programs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#resources"><i class="fas fa-download me-1"></i> Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact"><i class="fas fa-phone me-1"></i> Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge px-3 py-2 rounded-pill" style="background-color: rgba(201, 162, 39, 0.9); color: #2C2C2C; font-weight: 600;">
+                            <i class="fas fa-globe me-2"></i> Region XII
+                        </span>
+                    </div>
+                    <h1 class="fw-bold">Curriculum and Learning<br>Management Division</h1>
+                    <p class="lead mb-4">Empowering quality education through curriculum development, learning resources, and innovative programs across SOCCSKSARGEN.</p>
+                    
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#learning-areas" class="btn btn-gold btn-lg px-4">
+                            <i class="fas fa-book me-2"></i> Explore Learning Areas
+                        </a>
+                        <a href="#data-analytics" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fas fa-chart-line me-2"></i> View Analytics
+                        </a>
+                    </div>
+                    
+                    <div class="mt-4 d-flex align-items-center gap-3">
+                        <div class="d-flex">
+                            <div class="stat-pill px-3 py-1 d-flex align-items-center">
+                                <span class="fw-bold">8</span> <span class="ms-1">SDOs</span>
+                            </div>
+                        </div>
+                        <div>
+                            <small class="opacity-75">Serving 1.2M+ learners</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 d-none d-lg-block text-end">
+                    <div class="d-inline-block p-3" style="background: rgba(255,255,255,0.1); border-radius: 18px; border: 1px solid rgba(255,255,255,0.25);">
+                        <div class="text-center">
+                            <div class="fs-6 fw-semibold mb-1">Current SY 2025-2026</div>
+                            <div class="d-flex justify-content-center gap-2">
+                                <div class="px-3 py-1 bg-white text-dark rounded-pill" style="font-size: 0.85rem; font-weight: 700;">Active</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Updates Section -->
+    <section id="updates" class="py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-newspaper me-2"></i> Updates &amp; Announcements</h2>
+                <p>Latest news, memoranda, activities, and programs from CLMD</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Announcements -->
+                <div class="col-lg-6">
+                    <div class="gov-card h-100">
+                        <div class="card-header d-flex align-items-center">
+                            <i class="fas fa-bullhorn me-2"></i>
+                            <span class="fw-bold">Announcements</span>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="update-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <span class="badge bg-purple text-white" style="background:#5C2D91; font-size:0.7rem;">Jan 28, 2026</span>
+                                        <h6 class="mt-2 mb-1 fw-semibold">CLMD Orientation on New K-12 Curriculum</h6>
+                                        <p class="text-muted mb-0 small">All SDOs are invited to the virtual orientation on February 10, 2026.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="update-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <span class="badge bg-purple text-white" style="background:#5C2D91; font-size:0.7rem;">Jan 22, 2026</span>
+                                        <h6 class="mt-2 mb-1 fw-semibold">Submission of ARAL Program Reports</h6>
+                                        <p class="text-muted mb-0 small">Deadline for 4th Quarter ARAL reports is on February 5, 2026.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Memorandums -->
+                <div class="col-lg-6">
+                    <div class="gov-card h-100">
+                        <div class="card-header d-flex align-items-center">
+                            <i class="fas fa-file-alt me-2"></i>
+                            <span class="fw-bold">Regional Memorandums</span>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="update-item">
+                                <div>
+                                    <span class="badge bg-purple text-white" style="background:#5C2D91; font-size:0.7rem;">RM No. 042, s. 2026</span>
+                                    <h6 class="mt-2 mb-1 fw-semibold">Conduct of Regional Training on CRLA</h6>
+                                    <p class="text-muted small mb-0">February 17-21, 2026 • General Santos City</p>
+                                </div>
+                            </div>
+                            <div class="update-item">
+                                <div>
+                                    <span class="badge bg-purple text-white" style="background:#5C2D91; font-size:0.7rem;">RM No. 039, s. 2026</span>
+                                    <h6 class="mt-2 mb-1 fw-semibold">Guidelines on the Implementation of IPED</h6>
+                                    <p class="text-muted small mb-0">Issued: January 15, 2026</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activities, Trainings, PPAs -->
+                <div class="col-12">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="gov-card h-100">
+                                <div class="card-header">
+                                    <i class="fas fa-calendar-alt me-2"></i> <span class="fw-bold">Activities</span>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-3 d-flex">
+                                            <div class="me-3">
+                                                <div class="bg-light-purple text-center px-2 py-1 rounded" style="width:42px; font-size:0.75rem; line-height:1.1;">
+                                                    <div class="fw-bold">FEB</div>
+                                                    <div style="font-size:0.95rem;">12</div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <strong>CLMD Mid-Year Review</strong><br>
+                                                <small class="text-muted">Regional Office, Koronadal City</small>
+                                            </div>
+                                        </li>
+                                        <li class="d-flex">
+                                            <div class="me-3">
+                                                <div class="bg-light-purple text-center px-2 py-1 rounded" style="width:42px; font-size:0.75rem; line-height:1.1;">
+                                                    <div class="fw-bold">MAR</div>
+                                                    <div style="font-size:0.95rem;">03</div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <strong>Regional Science Fair</strong><br>
+                                                <small class="text-muted">Kidapawan City SDO</small>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="gov-card h-100">
+                                <div class="card-header">
+                                    <i class="fas fa-chalkboard-teacher me-2"></i> <span class="fw-bold">Trainings</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <span class="badge bg-success-subtle text-success px-2 py-1">Ongoing</span>
+                                        <strong class="d-block mt-1">MATATAG Curriculum Training</strong>
+                                        <small class="text-muted">Batch 3 • Jan 27 - Feb 7, 2026</small>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-info-subtle text-info px-2 py-1">Upcoming</span>
+                                        <strong class="d-block mt-1">Reading Remediation Workshop</strong>
+                                        <small class="text-muted">March 10-14, 2026 • Tacurong City</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="gov-card h-100">
+                                <div class="card-header">
+                                    <i class="fas fa-project-diagram me-2"></i> <span class="fw-bold">Programs &amp; Projects</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex flex-column gap-2">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                            <div>
+                                                <strong>ARAL Program</strong> <span class="badge demo-badge ms-1">DEMO</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                            <div><strong>RMA (Regional Math Assessment)</strong></div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                            <div><strong>CRLA (Comprehensive Reading &amp; Literacy Assessment)</strong></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-outline-purple px-4" style="border-color: #5C2D91; color: #5C2D91;">
+                    View All Updates <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Messages Section -->
+    <section id="messages" class="py-5 bg-light" style="background-color: #f8f4fb;">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-envelope me-2"></i> Messages from Leadership</h2>
+                <p>Official messages from the leadership of DepEd Region XII</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- RD Message -->
+                <div class="col-lg-4">
+                    <div class="gov-card message-card h-100">
+                        <div class="message-header text-center">
+                            <img src="https://i.pravatar.cc/92?img=28" alt="Regional Director" class="message-photo rounded-circle mb-3">
+                            <h5 class="mb-0 fw-bold">Dr. Carlito D. Rocafort</h5>
+                            <p class="mb-0 small opacity-75">Regional Director</p>
+                        </div>
+                        <div class="card-body">
+                            <p class="small mb-3">"As we move forward with the implementation of the MATATAG Agenda, the CLMD remains at the forefront of ensuring that every learner in Region XII receives quality, relevant, and accessible education. Together, let us continue to build a stronger foundation for our future leaders."</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">January 2026</small>
+                                </div>
+                                <button class="btn btn-sm btn-purple px-3 py-1" style="font-size:0.75rem;" onclick="showFullMessage(0)">Read full message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ARD Message -->
+                <div class="col-lg-4">
+                    <div class="gov-card message-card h-100">
+                        <div class="message-header text-center">
+                            <img src="https://i.pravatar.cc/92?img=47" alt="Assistant Regional Director" class="message-photo rounded-circle mb-3">
+                            <h5 class="mb-0 fw-bold">Dr. Ma. Theresa A. Abayon</h5>
+                            <p class="mb-0 small opacity-75">Assistant Regional Director</p>
+                        </div>
+                        <div class="card-body">
+                            <p class="small mb-3">"The dedication of our CLMD team in developing contextualized learning materials and strengthening the capacity of our teachers is truly commendable. I encourage all SDOs to fully maximize the available resources and programs to improve learner outcomes."</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">December 2025</small>
+                                </div>
+                                <button class="btn btn-sm btn-purple px-3 py-1" style="font-size:0.75rem;" onclick="showFullMessage(1)">Read full message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chief CLMD Message -->
+                <div class="col-lg-4">
+                    <div class="gov-card message-card h-100">
+                        <div class="message-header text-center">
+                            <img src="https://i.pravatar.cc/92?img=32" alt="CLMD Chief" class="message-photo rounded-circle mb-3">
+                            <h5 class="mb-0 fw-bold">Dr. Elena B. Dela Cruz</h5>
+                            <p class="mb-0 small opacity-75">Chief, CLMD</p>
+                        </div>
+                        <div class="card-body">
+                            <p class="small mb-3">"Our division is committed to providing timely support and quality curriculum materials to all 8 Schools Division Offices. We are continuously improving our programs to address learning gaps and promote inclusive education for all learners in SOCCSKSARGEN."</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">January 2026</small>
+                                </div>
+                                <button class="btn btn-sm btn-purple px-3 py-1" style="font-size:0.75rem;" onclick="showFullMessage(2)">Read full message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Learning Areas Section -->
+    <section id="learning-areas" class="py-5">
+        <div class="container">
+            <div class="section-header d-flex justify-content-between align-items-end">
+                <div>
+                    <h2><i class="fas fa-book me-2"></i> Learning Areas</h2>
+                    <p>Comprehensive curriculum support for all learning areas</p>
+                </div>
+                <div class="d-none d-md-block">
+                    <span class="badge px-3 py-2" style="background:#f3e9ff; color:#5C2D91; font-weight:600;">15 Learning Areas</span>
+                </div>
+            </div>
+            
+            <div class="row g-3">
+                <!-- Learning Area Cards -->
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(0)">
+                        <div class="icon-wrapper"><i class="fas fa-child"></i></div>
+                        <h6 class="fw-bold mb-1">Kindergarten</h6>
+                        <span class="small text-muted">Early Childhood</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(1)">
+                        <div class="icon-wrapper"><i class="fas fa-graduation-cap"></i></div>
+                        <h6 class="fw-bold mb-1">Elementary Education</h6>
+                        <span class="small text-muted">Grades 1-6</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(2)">
+                        <div class="icon-wrapper"><i class="fas fa-language"></i></div>
+                        <h6 class="fw-bold mb-1">Filipino</h6>
+                        <span class="small text-muted">Language</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(3)">
+                        <div class="icon-wrapper"><i class="fas fa-globe"></i></div>
+                        <h6 class="fw-bold mb-1">English</h6>
+                        <span class="small text-muted">Language</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(4)">
+                        <div class="icon-wrapper"><i class="fas fa-calculator"></i></div>
+                        <h6 class="fw-bold mb-1">Mathematics</h6>
+                        <span class="small text-muted">STEM</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(5)">
+                        <div class="icon-wrapper"><i class="fas fa-flask"></i></div>
+                        <h6 class="fw-bold mb-1">Science</h6>
+                        <span class="small text-muted">STEM</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(6)">
+                        <div class="icon-wrapper"><i class="fas fa-globe-americas"></i></div>
+                        <h6 class="fw-bold mb-1">Araling Panlipunan</h6>
+                        <span class="small text-muted">Social Studies</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(7)">
+                        <div class="icon-wrapper"><i class="fas fa-music"></i></div>
+                        <h6 class="fw-bold mb-1">MAPEH</h6>
+                        <span class="small text-muted">Arts &amp; PE</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(8)">
+                        <div class="icon-wrapper"><i class="fas fa-tools"></i></div>
+                        <h6 class="fw-bold mb-1">EPP / TLE</h6>
+                        <span class="small text-muted">Technical-Vocational</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(9)">
+                        <div class="icon-wrapper"><i class="fas fa-heart"></i></div>
+                        <h6 class="fw-bold mb-1">EsP / Values Education</h6>
+                        <span class="small text-muted">Values Formation</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(10)">
+                        <div class="icon-wrapper"><i class="fas fa-hands-helping"></i></div>
+                        <h6 class="fw-bold mb-1">Special Needs Education</h6>
+                        <span class="small text-muted">Inclusive Ed.</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(11)">
+                        <div class="icon-wrapper"><i class="fas fa-laptop-house"></i></div>
+                        <h6 class="fw-bold mb-1">Alternative Learning System</h6>
+                        <span class="small text-muted">ALS</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(12)">
+                        <div class="icon-wrapper"><i class="fas fa-mosque"></i></div>
+                        <h6 class="fw-bold mb-1">Madrasah Education</h6>
+                        <span class="small text-muted">Islamic Studies</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(13)">
+                        <div class="icon-wrapper"><i class="fas fa-users"></i></div>
+                        <h6 class="fw-bold mb-1">Indigenous Peoples Education</h6>
+                        <span class="small text-muted">IPED</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="gov-card learning-card p-3 h-100" onclick="showLearningAreaModal(14)">
+                        <div class="icon-wrapper"><i class="fas fa-folder-open"></i></div>
+                        <h6 class="fw-bold mb-1">Other CLMD Programs</h6>
+                        <span class="small text-muted">Special Programs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Data Analytics Section -->
+    <section id="data-analytics" class="py-5 bg-light" style="background-color: #f8f4fb;">
+        <div class="container">
+            <div class="section-header">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <div>
+                        <h2><i class="fas fa-chart-bar me-2"></i> Data Analytics</h2>
+                        <p>Performance dashboard of the 8 Schools Division Offices</p>
+                    </div>
+                    <div>
+                        <span class="demo-badge px-3 py-1"><i class="fas fa-info-circle me-1"></i> DEMO DATA</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Analytics Tabs -->
+            <ul class="nav nav-tabs nav-tabs-custom mb-4" id="analyticsTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="aral-tab" data-bs-toggle="tab" data-bs-target="#aral" type="button" role="tab">
+                        <i class="fas fa-users me-2"></i> ARAL Program
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="rma-tab" data-bs-toggle="tab" data-bs-target="#rma" type="button" role="tab">
+                        <i class="fas fa-calculator me-2"></i> RMA
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="crla-tab" data-bs-toggle="tab" data-bs-target="#crla" type="button" role="tab">
+                        <i class="fas fa-book-reader me-2"></i> CRLA
+                    </button>
+                </li>
+            </ul>
+            
+            <div class="tab-content" id="analyticsTabContent">
+                <!-- ARAL Tab -->
+                <div class="tab-pane fade show active" id="aral" role="tabpanel">
+                    <div class="row g-4">
+                        <!-- Summary Cards -->
+                        <div class="col-12">
+                            <div class="row g-3">
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Total Learners</div>
+                                                <div class="metric-value">248,760</div>
+                                            </div>
+                                            <i class="fas fa-users fs-2 text-purple opacity-25"></i>
+                                        </div>
+                                        <div class="mt-2"><span class="badge bg-success-subtle text-success">+12.4%</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Participation Rate</div>
+                                                <div class="metric-value">87.3%</div>
+                                            </div>
+                                            <i class="fas fa-chart-line fs-2 text-purple opacity-25"></i>
+                                        </div>
+                                        <div class="mt-2"><span class="badge bg-success-subtle text-success">+4.8%</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Avg. Learning Gain</div>
+                                                <div class="metric-value">21.8%</div>
+                                            </div>
+                                            <i class="fas fa-tachometer-alt fs-2 text-purple opacity-25"></i>
+                                        </div>
+                                        <div class="mt-2"><span class="badge bg-success-subtle text-success">+3.5 pts</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Post-test Avg.</div>
+                                                <div class="metric-value">78.4</div>
+                                            </div>
+                                            <i class="fas fa-chart-bar fs-2 text-purple opacity-25"></i>
+                                        </div>
+                                        <div class="mt-2"><span class="badge bg-success-subtle text-success">+9.2 pts</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Charts -->
+                        <div class="col-lg-7">
+                            <div class="dashboard-card">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h6 class="fw-bold mb-0">ARAL Performance by SDO</h6>
+                                    <span class="small text-muted">Post-test Scores</span>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="aralBarChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-5">
+                            <div class="dashboard-card">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h6 class="fw-bold mb-0">Learning Gains Trend</h6>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="aralLineChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Table -->
+                        <div class="col-12">
+                            <div class="dashboard-card">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h6 class="fw-bold mb-0">ARAL Performance Table (Demo)</h6>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                            <tr class="table-light">
+                                                <th>Schools Division Office</th>
+                                                <th class="text-center">Learners</th>
+                                                <th class="text-center">Participation</th>
+                                                <th class="text-center">Pre-test</th>
+                                                <th class="text-center">Post-test</th>
+                                                <th class="text-center">Gain</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="aralTableBody">
+                                            <!-- Populated by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- RMA Tab -->
+                <div class="tab-pane fade" id="rma" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="row g-3">
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Mean Score</div>
+                                                <div class="metric-value">76.2</div>
+                                            </div>
+                                            <i class="fas fa-calculator fs-2 text-purple opacity-25"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Proficiency Rate</div>
+                                                <div class="metric-value">64.8%</div>
+                                            </div>
+                                            <i class="fas fa-tachometer-alt fs-2 text-purple opacity-25"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Top SDO</div>
+                                                <div class="metric-value" style="font-size:1.35rem;">Koronadal City</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Grade 6 Mean</div>
+                                                <div class="metric-value">81.4</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-7">
+                            <div class="dashboard-card">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h6 class="fw-bold mb-0">RMA Mean Scores by SDO</h6>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="rmaBarChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-5">
+                            <div class="dashboard-card">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h6 class="fw-bold mb-0">Proficiency Levels</h6>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="rmaPieChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="dashboard-card">
+                                <h6 class="fw-bold mb-3">RMA Performance by SDO (Demo)</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                            <tr class="table-light">
+                                                <th>SDO</th>
+                                                <th class="text-center">Mean Score</th>
+                                                <th class="text-center">Grade 4</th>
+                                                <th class="text-center">Grade 5</th>
+                                                <th class="text-center">Grade 6</th>
+                                                <th class="text-center">Proficiency</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="rmaTableBody">
+                                            <!-- Populated by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CRLA Tab -->
+                <div class="tab-pane fade" id="crla" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="row g-3">
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Avg. Reading Score</div>
+                                                <div class="metric-value">73.9</div>
+                                            </div>
+                                            <i class="fas fa-book-reader fs-2 text-purple opacity-25"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Numeracy Score</div>
+                                                <div class="metric-value">68.5</div>
+                                            </div>
+                                            <i class="fas fa-calculator fs-2 text-purple opacity-25"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Proficient Rate</div>
+                                                <div class="metric-value">41.2%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="metric-card">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="text-muted small">Beginning Level</div>
+                                                <div class="metric-value">18.7%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-7">
+                            <div class="dashboard-card">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h6 class="fw-bold mb-0">CRLA Reading &amp; Numeracy by SDO</h6>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="crlaBarChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-5">
+                            <div class="dashboard-card">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h6 class="fw-bold mb-0">Proficiency Distribution</h6>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="crlaDoughnutChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="dashboard-card">
+                                <h6 class="fw-bold mb-3">CRLA Performance Summary (Demo)</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                            <tr class="table-light">
+                                                <th>SDO</th>
+                                                <th class="text-center">Reading</th>
+                                                <th class="text-center">Numeracy</th>
+                                                <th class="text-center">Beginning</th>
+                                                <th class="text-center">Developing</th>
+                                                <th class="text-center">Proficient</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="crlaTableBody">
+                                            <!-- Populated by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Programs and Projects Section -->
+    <section id="programs" class="py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-tasks me-2"></i> CLMD Programs &amp; Projects</h2>
+                <p>Key initiatives driving educational improvement in Region XII</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="gov-card h-100 p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-wrapper" style="width:46px;height:46px; font-size:1.35rem;"><i class="fas fa-users"></i></div>
+                            <div class="ms-3">
+                                <h5 class="mb-0 fw-bold">ARAL Program</h5>
+                                <span class="small text-muted">Accelerated Remediation and Academic Learning</span>
+                            </div>
+                        </div>
+                        <p class="small">A flagship program to address learning gaps through targeted remediation in reading, math, and science.</p>
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-light text-dark px-3">248,760 learners</span>
+                            <span class="badge bg-light text-dark px-3">87% coverage</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="gov-card h-100 p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-wrapper" style="width:46px;height:46px; font-size:1.35rem;"><i class="fas fa-chart-line"></i></div>
+                            <div class="ms-3">
+                                <h5 class="mb-0 fw-bold">RMA</h5>
+                                <span class="small text-muted">Regional Mathematics Assessment</span>
+                            </div>
+                        </div>
+                        <p class="small">Standardized assessment tool to monitor mathematics proficiency across grade levels in all SDOs.</p>
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-light text-dark px-3">64.8% proficient</span>
+                            <span class="badge bg-light text-dark px-3">SY 2025-26</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="gov-card h-100 p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-wrapper" style="width:46px;height:46px; font-size:1.35rem;"><i class="fas fa-book-reader"></i></div>
+                            <div class="ms-3">
+                                <h5 class="mb-0 fw-bold">CRLA</h5>
+                                <span class="small text-muted">Comprehensive Reading &amp; Literacy Assessment</span>
+                            </div>
+                        </div>
+                        <p class="small">A comprehensive tool assessing reading and numeracy skills to guide intervention strategies.</p>
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-light text-dark px-3">41.2% Proficient</span>
+                            <span class="badge bg-light text-dark px-3">Region-wide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Regional Activities -->
+    <section class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="gov-card p-4">
+                        <h5 class="fw-bold mb-3"><i class="fas fa-calendar me-2 text-purple"></i> Upcoming Regional Activities</h5>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex border-0 px-0">
+                                <div class="me-3 text-center" style="width: 55px;">
+                                    <div class="fw-bold text-purple">FEB 17</div>
+                                </div>
+                                <div>
+                                    <strong>Regional Training on CRLA</strong><br>
+                                    <span class="small text-muted">General Santos City • 5 days</span>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex border-0 px-0">
+                                <div class="me-3 text-center" style="width: 55px;">
+                                    <div class="fw-bold text-purple">MAR 3</div>
+                                </div>
+                                <div>
+                                    <strong>Regional Science Fair 2026</strong><br>
+                                    <span class="small text-muted">Kidapawan City SDO</span>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex border-0 px-0">
+                                <div class="me-3 text-center" style="width: 55px;">
+                                    <div class="fw-bold text-purple">MAR 20</div>
+                                </div>
+                                <div>
+                                    <strong>IPED Summit</strong><br>
+                                    <span class="small text-muted">Koronadal City</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="gov-card p-4 h-100">
+                        <h5 class="fw-bold mb-3"><i class="fas fa-link me-2 text-purple"></i> Important Links</h5>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <a href="#" class="d-block small px-3 py-2 border rounded text-decoration-none text-dark"><i class="fas fa-external-link-alt me-2 text-purple"></i> DepEd Central Office</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="d-block small px-3 py-2 border rounded text-decoration-none text-dark"><i class="fas fa-external-link-alt me-2 text-purple"></i> Region XII Portal</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="d-block small px-3 py-2 border rounded text-decoration-none text-dark"><i class="fas fa-external-link-alt me-2 text-purple"></i> Learning Resources Portal</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="d-block small px-3 py-2 border rounded text-decoration-none text-dark"><i class="fas fa-external-link-alt me-2 text-purple"></i> DepEd LMS</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="d-block small px-3 py-2 border rounded text-decoration-none text-dark"><i class="fas fa-external-link-alt me-2 text-purple"></i> MATATAG Resources</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="d-block small px-3 py-2 border rounded text-decoration-none text-dark"><i class="fas fa-external-link-alt me-2 text-purple"></i> Regional Memo Archive</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Downloadable Resources -->
+    <section id="resources" class="py-5 bg-light" style="background-color: #f8f4fb;">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-download me-2"></i> Downloadable Resources</h2>
+                <p>Official curriculum guides, learning materials, and forms</p>
+            </div>
+            
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                    <div class="gov-card p-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-file-pdf fs-3 text-danger me-3"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">MATATAG Curriculum Guides (K-10)</div>
+                                <small class="text-muted">Updated: Jan 2026 • PDF (42.8 MB)</small>
+                            </div>
+                            <button onclick="fakeDownload(this)" class="btn btn-sm btn-purple"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="gov-card p-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-file-pdf fs-3 text-danger me-3"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">CRLA Assessment Tools</div>
+                                <small class="text-muted">Updated: Dec 2025 • ZIP (18.4 MB)</small>
+                            </div>
+                            <button onclick="fakeDownload(this)" class="btn btn-sm btn-purple"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="gov-card p-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-file-pdf fs-3 text-danger me-3"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">Regional Learning Materials (Q4 SY 2025-26)</div>
+                                <small class="text-muted">Updated: Jan 2026 • ZIP (65.1 MB)</small>
+                            </div>
+                            <button onclick="fakeDownload(this)" class="btn btn-sm btn-purple"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="gov-card p-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-file-excel fs-3 text-success me-3"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">ARAL Program Monitoring Template</div>
+                                <small class="text-muted">Excel • Updated Jan 2026</small>
+                            </div>
+                            <button onclick="fakeDownload(this)" class="btn btn-sm btn-purple"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="gov-card p-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-file-pdf fs-3 text-danger me-3"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">IPED Contextualized Modules</div>
+                                <small class="text-muted">PDF • 12 modules</small>
+                            </div>
+                            <button onclick="fakeDownload(this)" class="btn btn-sm btn-purple"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="gov-card p-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-file-pdf fs-3 text-danger me-3"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">RMA 2025-2026 Assessment Guide</div>
+                                <small class="text-muted">Updated: Jan 2026</small>
+                            </div>
+                            <button onclick="fakeDownload(this)" class="btn btn-sm btn-purple"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-purple"><i class="fas fa-folder-open me-2"></i> Browse All Resources</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Us -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-phone me-2"></i> Contact Us</h2>
+                <p>Get in touch with the CLMD team</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="gov-card p-4 h-100">
+                        <h5 class="fw-bold">Curriculum and Learning Management Division</h5>
+                        <div class="mt-3">
+                            <div class="d-flex mb-3">
+                                <i class="fas fa-map-marker-alt text-purple mt-1 me-3 fs-5"></i>
+                                <div>
+                                    <strong>DepEd Regional Office XII</strong><br>
+                                    <span class="text-muted">Regional Government Center, Alunan Avenue,<br>Koronadal City, South Cotabato 9506</span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex mb-3">
+                                <i class="fas fa-phone text-purple mt-1 me-3 fs-5"></i>
+                                <div>
+                                    <strong>(083) 228-9891</strong><br>
+                                    <span class="text-muted">CLMD Office</span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex">
+                                <i class="fas fa-envelope text-purple mt-1 me-3 fs-5"></i>
+                                <div>
+                                    <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d3e313039732f383a3432336c6f1d39382d3839733a322b732d35">[email&#160;protected]</a></strong>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 pt-3 border-top">
+                            <strong>Office Hours:</strong><br>
+                            <span class="text-muted">Monday to Friday • 8:00 AM - 5:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7">
+                    <div class="gov-card p-4">
+                        <h6 class="fw-bold mb-3">Send us a message</h6>
+                        <form id="contactForm" onsubmit="submitContactForm(event)">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small">Full Name</label>
+                                    <input type="text" class="form-control" placeholder="Juan Dela Cruz" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small">Email Address</label>
+                                    <input type="email" class="form-control" placeholder="your@email.com" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small">SDO / Office</label>
+                                    <select class="form-select">
+                                        <option>Cotabato Province</option>
+                                        <option>General Santos City</option>
+                                        <option>Kidapawan City</option>
+                                        <option>Koronadal City</option>
+                                        <option>South Cotabato</option>
+                                        <option>Sarangani</option>
+                                        <option>Sultan Kudarat</option>
+                                        <option>Tacurong City</option>
+                                        <option>Regional Office</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small">Subject</label>
+                                    <input type="text" class="form-control" placeholder="Curriculum inquiry" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small">Message</label>
+                                    <textarea class="form-control" rows="4" placeholder="Write your message here..." required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-purple px-5">Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 mb-4 mb-md-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="deped-logo me-3" style="width: 44px; height: 44px; border: 2px solid #C9A227;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 42 42" fill="none">
+                                <circle cx="21" cy="21" r="20" fill="#FFFFFF"/>
+                                <circle cx="21" cy="21" r="12" fill="#5C2D91"/>
+                                <rect x="13" y="15" width="16" height="13" rx="1.5" fill="#FFFFFF"/>
+                                <path d="M16 18.5 L26 18.5" stroke="#5C2D91" stroke-width="1.4"/>
+                                <path d="M16 21.5 L26 21.5" stroke="#5C2D91" stroke-width="1.4"/>
+                                <circle cx="21" cy="21" r="20" fill="none" stroke="#C9A227" stroke-width="2.5"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="fw-bold text-white">DepEd Region XII</div>
+                            <div class="small" style="color:#d1c3e2;">SOCCSKSARGEN</div>
+                        </div>
+                    </div>
+                    <p class="small mb-0" style="color:#d1c3e2;">Curriculum and Learning Management Division</p>
+                </div>
+                
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <div class="fw-semibold text-white mb-3">Quick Links</div>
+                    <div class="d-flex flex-column gap-1">
+                        <a href="#updates" class="footer-link small">Updates</a>
+                        <a href="#learning-areas" class="footer-link small">Learning Areas</a>
+                        <a href="#data-analytics" class="footer-link small">Data Analytics</a>
+                        <a href="#resources" class="footer-link small">Resources</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="fw-semibold text-white mb-3">Connect With Us</div>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white fs-5"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white fs-5"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white fs-5"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <div class="mt-3">
+                        <small style="color:#d1c3e2;">© 2026 DepEd Region XII. All Rights Reserved.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Learning Area Modal -->
+    <div class="modal fade" id="learningModal" tabindex="-1" aria-labelledby="learningModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title fw-bold" id="learningModalLabel"></h5>
+                        <span class="badge bg-light text-purple" id="learningModalSubtitle"></span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs nav-tabs-custom mb-3" id="learningModalTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#modal-curriculum" type="button">Curriculum Guides</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#modal-resources" type="button">Learning Resources</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#modal-programs" type="button">Programs &amp; Projects</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#modal-memos" type="button">Memoranda</button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content" id="learningModalTabContent">
+                        <!-- Curriculum Tab -->
+                        <div class="tab-pane fade show active" id="modal-curriculum">
+                            <div class="learning-tab-content">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="border rounded p-3">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <strong>CG for SY 2025-2026</strong><br>
+                                                    <span class="small text-muted">Version 3.2 • PDF</span>
+                                                </div>
+                                                <button class="btn btn-sm btn-outline-purple px-2 py-1" onclick="fakeDownload(this)"><i class="fas fa-download"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="border rounded p-3">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <strong>Learning Competencies Matrix</strong><br>
+                                                    <span class="small text-muted">Updated Jan 2026</span>
+                                                </div>
+                                                <button class="btn btn-sm btn-outline-purple px-2 py-1" onclick="fakeDownload(this)"><i class="fas fa-download"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <h6 class="fw-semibold">Available Guides:</h6>
+                                    <ul class="list-unstyled small mb-0">
+                                        <li class="py-1">• Grade Level Curriculum Maps (K-12)</li>
+                                        <li class="py-1">• Quarter 1-4 Detailed Lesson Plans</li>
+                                        <li class="py-1">• Contextualized Learning Materials</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Resources Tab -->
+                        <div class="tab-pane fade" id="modal-resources">
+                            <div class="learning-tab-content">
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        <div>Self-Learning Modules (SLMs) - SY 2025-26</div>
+                                        <button class="btn btn-sm btn-purple px-3" onclick="fakeDownload(this)"><i class="fas fa-download me-1"></i> Download</button>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        <div>Teacher's Guide with Answer Keys</div>
+                                        <button class="btn btn-sm btn-purple px-3" onclick="fakeDownload(this)"><i class="fas fa-download me-1"></i> Download</button>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        <div>Interactive Learning Videos (MP4)</div>
+                                        <button class="btn btn-sm btn-purple px-3" onclick="fakeDownload(this)"><i class="fas fa-download me-1"></i> Download</button>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        <div>Activity Sheets &amp; Worksheets</div>
+                                        <button class="btn btn-sm btn-purple px-3" onclick="fakeDownload(this)"><i class="fas fa-download me-1"></i> Download</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Programs Tab -->
+                        <div class="tab-pane fade" id="modal-programs">
+                            <div class="learning-tab-content">
+                                <div class="mb-3">
+                                    <div class="fw-semibold">Current Programs:</div>
+                                    <div class="mt-2">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="fas fa-check-circle text-success me-2"></i> 
+                                            <span>Contextualized Learning Materials Development</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="fas fa-check-circle text-success me-2"></i> 
+                                            <span>Teacher Capacity Building on New Curriculum</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="fas fa-check-circle text-success me-2"></i> 
+                                            <span>Learning Resource Quality Assurance</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Memoranda Tab -->
+                        <div class="tab-pane fade" id="modal-memos">
+                            <div class="learning-tab-content">
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>RM No. 028, s. 2026</strong><br>
+                                                <span class="small text-muted">Guidelines on Learning Resource Development</span>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-purple">View</button>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>RM No. 017, s. 2026</strong><br>
+                                                <span class="small text-muted">Implementation of Contextualized Modules</span>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-purple">View</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="border-top pt-3 mt-4">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="small">
+                                    <strong>Focal Person:</strong> <span id="modalFocal"></span><br>
+                                    <strong>Email:</strong> <span id="modalEmail"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-5 text-md-end">
+                                <button class="btn btn-gold btn-sm mt-2 mt-md-0" onclick="contactFocalPerson()">
+                                    <i class="fas fa-envelope me-1"></i> Contact Focal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Demo SDOs
+        const sdos = [
+            "Cotabato Province", "General Santos City", "Kidapawan City", 
+            "Koronadal City", "South Cotabato", "Sarangani", 
+            "Sultan Kudarat", "Tacurong City"
+        ];
+        
+        // Demo Data for ARAL
+        const aralData = {
+            learners: [41200, 28400, 19300, 31200, 37800, 22100, 29500, 39860],
+            participation: [89.2, 83.5, 91.4, 85.7, 88.9, 79.6, 86.4, 92.1],
+            preTest: [54.8, 57.2, 52.9, 59.4, 56.1, 49.8, 55.3, 58.7],
+            postTest: [76.4, 81.9, 79.5, 83.2, 77.8, 72.3, 80.1, 84.6],
+            gain: [21.6, 24.7, 26.6, 23.8, 21.7, 22.5, 24.8, 25.9]
+        };
+        
+        // Demo Data for RMA
+        const rmaData = {
+            meanScore: [73.8, 79.2, 71.4, 82.7, 74.9, 68.3, 75.8, 81.5],
+            grade4: [71.2, 76.8, 69.9, 80.3, 73.1, 66.4, 74.2, 79.6],
+            grade5: [74.5, 80.1, 72.8, 83.9, 75.6, 69.7, 76.5, 82.3],
+            grade6: [75.7, 81.3, 71.5, 84.1, 76.2, 68.8, 77.1, 82.6],
+            proficiency: [61.4, 72.8, 58.3, 78.6, 63.9, 51.2, 64.7, 75.3]
+        };
+        
+        // Demo Data for CRLA
+        const crlaData = {
+            reading: [72.4, 78.6, 69.8, 81.2, 74.1, 65.7, 73.9, 79.5],
+            numeracy: [67.8, 71.4, 65.2, 74.9, 68.3, 60.9, 69.2, 72.7],
+            beginning: [19.4, 13.2, 22.6, 10.8, 18.1, 27.5, 19.8, 14.3],
+            developing: [39.1, 34.7, 41.3, 29.2, 37.8, 45.2, 38.5, 35.4],
+            proficient: [41.5, 52.1, 36.1, 60.0, 44.1, 27.3, 41.7, 50.3]
+        };
+        
+        // Initialize Charts
+        let aralBarChartInstance, aralLineChartInstance, rmaBarChartInstance, rmaPieChartInstance, crlaBarChartInstance, crlaDoughnutInstance;
+        
+        function initializeCharts() {
+            // ARAL Bar Chart
+            const aralCtx = document.getElementById('aralBarChart');
+            if (aralCtx) {
+                aralBarChartInstance = new Chart(aralCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: sdos.map(s => s.length > 13 ? s.substring(0, 12) + '...' : s),
+                        datasets: [{
+                            label: 'Post-test Score',
+                            data: aralData.postTest,
+                            backgroundColor: '#5C2D91',
+                            borderColor: '#3D1F5C',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: ctx => ctx.raw + ' pts' } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, grid: { color: '#f1e9f9' } },
+                            x: { grid: { color: '#f1e9f9' } }
+                        }
+                    }
+                });
+            }
+            
+            // ARAL Line Chart (Learning Gains Trend)
+            const aralLineCtx = document.getElementById('aralLineChart');
+            if (aralLineCtx) {
+                aralLineChartInstance = new Chart(aralLineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                        datasets: [{
+                            label: 'Average Learning Gain (%)',
+                            data: [14.3, 17.8, 19.9, 21.8],
+                            borderColor: '#C9A227',
+                            backgroundColor: 'rgba(201, 162, 39, 0.15)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, max: 30, grid: { color: '#f1e9f9' } },
+                            x: { grid: { color: '#f1e9f9' } }
+                        }
+                    }
+                });
+            }
+            
+            // RMA Bar Chart
+            const rmaCtx = document.getElementById('rmaBarChart');
+            if (rmaCtx) {
+                rmaBarChartInstance = new Chart(rmaCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: sdos.map(s => s.length > 13 ? s.substring(0, 12) + '...' : s),
+                        datasets: [{
+                            label: 'Mean Score',
+                            data: rmaData.meanScore,
+                            backgroundColor: '#5C2D91',
+                            borderColor: '#3D1F5C',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, grid: { color: '#f1e9f9' } },
+                            x: { grid: { color: '#f1e9f9' } }
+                        }
+                    }
+                });
+            }
+            
+            // RMA Pie Chart
+            const rmaPieCtx = document.getElementById('rmaPieChart');
+            if (rmaPieCtx) {
+                rmaPieChartInstance = new Chart(rmaPieCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Proficient', 'Developing', 'Beginning'],
+                        datasets: [{
+                            data: [64.8, 27.5, 7.7],
+                            backgroundColor: ['#5C2D91', '#C9A227', '#9E7BB5'],
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { padding: 15, font: { size: 12 } } }
+                        }
+                    }
+                });
+            }
+            
+            // CRLA Bar Chart (Reading + Numeracy)
+            const crlaCtx = document.getElementById('crlaBarChart');
+            if (crlaCtx) {
+                crlaBarChartInstance = new Chart(crlaCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: sdos.map(s => s.length > 12 ? s.substring(0, 11) + '..' : s),
+                        datasets: [
+                            {
+                                label: 'Reading',
+                                data: crlaData.reading,
+                                backgroundColor: '#5C2D91',
+                                borderColor: '#3D1F5C',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Numeracy',
+                                data: crlaData.numeracy,
+                                backgroundColor: '#C9A227',
+                                borderColor: '#b38f1e',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top', labels: { boxWidth: 12 } } },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, grid: { color: '#f1e9f9' } },
+                            x: { grid: { color: '#f1e9f9' } }
+                        }
+                    }
+                });
+            }
+            
+            // CRLA Doughnut Chart
+            const crlaDoughnutCtx = document.getElementById('crlaDoughnutChart');
+            if (crlaDoughnutCtx) {
+                crlaDoughnutInstance = new Chart(crlaDoughnutCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Proficient', 'Developing', 'Beginning'],
+                        datasets: [{
+                            data: [41.2, 39.8, 19.0],
+                            backgroundColor: ['#5C2D91', '#C9A227', '#9E7BB5'],
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { padding: 15, font: { size: 12 } } }
+                        }
+                    }
+                });
+            }
+            
+            // Populate tables
+            populateAralTable();
+            populateRmaTable();
+            populateCrlaTable();
+        }
+        
+        function populateAralTable() {
+            const tbody = document.getElementById('aralTableBody');
+            tbody.innerHTML = '';
+            
+            for (let i = 0; i < sdos.length; i++) {
+                const row = document.createElement('tr');
+                row.className = 'sdo-row';
+                row.innerHTML = `
+                    <td><strong>${sdos[i]}</strong></td>
+                    <td class="text-center">${aralData.learners[i].toLocaleString()}</td>
+                    <td class="text-center"><span class="badge bg-success-subtle text-success">${aralData.participation[i]}%</span></td>
+                    <td class="text-center">${aralData.preTest[i]}</td>
+                    <td class="text-center"><strong>${aralData.postTest[i]}</strong></td>
+                    <td class="text-center"><span class="badge bg-success-subtle text-success">+${aralData.gain[i]}%</span></td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+        
+        function populateRmaTable() {
+            const tbody = document.getElementById('rmaTableBody');
+            tbody.innerHTML = '';
+            
+            for (let i = 0; i < sdos.length; i++) {
+                const row = document.createElement('tr');
+                row.className = 'sdo-row';
+                row.innerHTML = `
+                    <td><strong>${sdos[i]}</strong></td>
+                    <td class="text-center"><strong>${rmaData.meanScore[i]}</strong></td>
+                    <td class="text-center">${rmaData.grade4[i]}</td>
+                    <td class="text-center">${rmaData.grade5[i]}</td>
+                    <td class="text-center">${rmaData.grade6[i]}</td>
+                    <td class="text-center"><span class="badge bg-success-subtle text-success">${rmaData.proficiency[i]}%</span></td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+        
+        function populateCrlaTable() {
+            const tbody = document.getElementById('crlaTableBody');
+            tbody.innerHTML = '';
+            
+            for (let i = 0; i < sdos.length; i++) {
+                const row = document.createElement('tr');
+                row.className = 'sdo-row';
+                row.innerHTML = `
+                    <td><strong>${sdos[i]}</strong></td>
+                    <td class="text-center">${crlaData.reading[i]}</td>
+                    <td class="text-center">${crlaData.numeracy[i]}</td>
+                    <td class="text-center"><span class="badge bg-danger-subtle text-danger">${crlaData.beginning[i]}%</span></td>
+                    <td class="text-center"><span class="badge bg-warning-subtle text-warning">${crlaData.developing[i]}%</span></td>
+                    <td class="text-center"><span class="badge bg-success-subtle text-success">${crlaData.proficient[i]}%</span></td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+        
+        // Learning Areas Data
+        const learningAreas = [
+            { id: 0, name: "Kindergarten", subtitle: "Early Childhood Education", focal: "Ms. Maria Santos", email: "maria.santos@deped.gov.ph", icon: "fa-child" },
+            { id: 1, name: "Elementary Education", subtitle: "Grades 1-6", focal: "Mr. Juan Reyes", email: "juan.reyes@deped.gov.ph", icon: "fa-graduation-cap" },
+            { id: 2, name: "Filipino", subtitle: "Language & Literature", focal: "Dr. Ana Villanueva", email: "ana.villanueva@deped.gov.ph", icon: "fa-language" },
+            { id: 3, name: "English", subtitle: "Language & Literature", focal: "Ms. Patricia Gomez", email: "patricia.gomez@deped.gov.ph", icon: "fa-globe" },
+            { id: 4, name: "Mathematics", subtitle: "STEM", focal: "Mr. Roberto Aquino", email: "roberto.aquino@deped.gov.ph", icon: "fa-calculator" },
+            { id: 5, name: "Science", subtitle: "STEM", focal: "Dr. Grace Mendoza", email: "grace.mendoza@deped.gov.ph", icon: "fa-flask" },
+            { id: 6, name: "Araling Panlipunan", subtitle: "Social Studies", focal: "Mr. Fernando Cruz", email: "fernando.cruz@deped.gov.ph", icon: "fa-globe-americas" },
+            { id: 7, name: "MAPEH", subtitle: "Music, Arts, PE & Health", focal: "Ms. Carla Lim", email: "carla.lim@deped.gov.ph", icon: "fa-music" },
+            { id: 8, name: "EPP / TLE", subtitle: "Edukasyong Pantahanan at Pangkabuhayan / TLE", focal: "Engr. Miguel Torres", email: "miguel.torres@deped.gov.ph", icon: "fa-tools" },
+            { id: 9, name: "EsP / Values Education", subtitle: "Values Formation", focal: "Ms. Lourdes Bautista", email: "lourdes.bautista@deped.gov.ph", icon: "fa-heart" },
+            { id: 10, name: "Special Needs Education", subtitle: "Inclusive Education", focal: "Ms. Teresa Ramos", email: "teresa.ramos@deped.gov.ph", icon: "fa-hands-helping" },
+            { id: 11, name: "Alternative Learning System", subtitle: "ALS", focal: "Mr. Ramon Salazar", email: "ramon.salazar@deped.gov.ph", icon: "fa-laptop-house" },
+            { id: 12, name: "Madrasah Education", subtitle: "Islamic Studies", focal: "Mr. Abdul Rahman", email: "abdul.rahman@deped.gov.ph", icon: "fa-mosque" },
+            { id: 13, name: "Indigenous Peoples Education", subtitle: "IPED", focal: "Ms. Elena Magsaysay", email: "elena.magsaysay@deped.gov.ph", icon: "fa-users" },
+            { id: 14, name: "Other CLMD Programs", subtitle: "Special & Supplemental Programs", focal: "Mr. Victor Navarro", email: "victor.navarro@deped.gov.ph", icon: "fa-folder-open" }
+        ];
+        
+        let currentLearningArea = null;
+        
+        function showLearningAreaModal(areaIndex) {
+            const area = learningAreas[areaIndex];
+            currentLearningArea = area;
+            
+            // Set modal content
+            document.getElementById('learningModalLabel').innerHTML = `<i class="fas ${area.icon} me-2"></i> ${area.name}`;
+            document.getElementById('learningModalSubtitle').innerHTML = area.subtitle;
+            document.getElementById('modalFocal').innerHTML = area.focal;
+            document.getElementById('modalEmail').innerHTML = area.email;
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('learningModal'));
+            modal.show();
+        }
+        
+        function contactFocalPerson() {
+            if (!currentLearningArea) return;
+            
+            const modalEl = document.getElementById('learningModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            modalInstance.hide();
+            
+            setTimeout(() => {
+                alert(`Thank you! An email has been prepared for ${currentLearningArea.focal} (${currentLearningArea.email}).\n\nThis is a demo. In a real implementation, this would open the email client.`);
+            }, 450);
+        }
+        
+        // Full messages modal content
+        function showFullMessage(index) {
+            const messages = [
+                {
+                    title: "Message from the Regional Director",
+                    name: "Dr. Carlito D. Rocafort",
+                    position: "Regional Director, DepEd Region XII",
+                    content: "As we move forward with the implementation of the MATATAG Agenda, the Curriculum and Learning Management Division remains at the forefront of ensuring that every learner in Region XII receives quality, relevant, and accessible education. The division has made remarkable progress in the development of contextualized learning materials and the implementation of key programs such as ARAL, RMA, and CRLA.\n\nTogether with our dedicated Schools Division Offices and school leaders, we continue to build a stronger foundation for our future leaders. I commend the entire CLMD team for their unwavering commitment to excellence in curriculum management and learner support.\n\nLet us continue to work collaboratively to achieve our shared vision of a more progressive and empowered SOCCSKSARGEN region."
+                },
+                {
+                    title: "Message from the Assistant Regional Director",
+                    name: "Dr. Ma. Theresa A. Abayon",
+                    position: "Assistant Regional Director, DepEd Region XII",
+                    content: "The dedication of our CLMD team in developing contextualized learning materials and strengthening the capacity of our teachers is truly commendable. I am pleased to note the significant improvements in learner performance across all eight Schools Division Offices, as reflected in the ARAL and CRLA results.\n\nI encourage all SDOs to fully maximize the available resources and programs to improve learner outcomes. The success of the MATATAG curriculum implementation hinges on our collective efforts to provide high-quality learning experiences.\n\nLet us continue to uphold the highest standards of professionalism and service in education."
+                },
+                {
+                    title: "Message from the Chief of CLMD",
+                    name: "Dr. Elena B. Dela Cruz",
+                    position: "Chief, Curriculum and Learning Management Division",
+                    content: "Our division is committed to providing timely support and quality curriculum materials to all 8 Schools Division Offices. We are continuously improving our programs to address learning gaps and promote inclusive education for all learners in SOCCSKSARGEN.\n\nWe have intensified our efforts in teacher training, learning resource development, and data-driven interventions. The positive feedback from the field motivates us to do even better.\n\nI extend my deepest gratitude to all the focal persons, teachers, and school heads who have been instrumental in the successful implementation of our programs. Your dedication inspires us every day."
+                }
+            ];
+            
+            const msg = messages[index];
+            
+            const modalHTML = `
+                <div class="modal fade" id="fullMessageModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background: linear-gradient(135deg, #5C2D91, #3D1F5C); color: white;">
+                                <h5 class="modal-title fw-bold">${msg.title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body py-4 px-4">
+                                <div class="text-center mb-4">
+                                    <img src="https://i.pravatar.cc/92?img=${index === 0 ? '28' : index === 1 ? '47' : '32'}" class="rounded-circle mb-3" width="82" height="82" style="border: 5px solid #f3e9ff;">
+                                    <h5 class="fw-bold mb-0">${msg.name}</h5>
+                                    <p class="text-muted mb-0">${msg.position}</p>
+                                </div>
+                                
+                                <div class="px-2">
+                                    <p style="line-height:1.75; font-size:0.98rem;">${msg.content.replace(/\n\n/g, '</p><p style="line-height:1.75; font-size:0.98rem;">')}</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            const existing = document.getElementById('fullMessageModal');
+            if (existing) existing.remove();
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            const modal = new bootstrap.Modal(document.getElementById('fullMessageModal'));
+            modal.show();
+            
+            // Clean up on close
+            document.getElementById('fullMessageModal').addEventListener('hidden.bs.modal', function() {
+                this.remove();
+            });
+        }
+        
+        function fakeDownload(element) {
+            const originalText = element.innerHTML;
+            element.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+            element.disabled = true;
+            
+            setTimeout(() => {
+                element.innerHTML = `<i class="fas fa-check"></i> Downloaded`;
+                element.classList.remove('btn-purple');
+                element.classList.add('btn-success');
+                
+                setTimeout(() => {
+                    element.innerHTML = originalText;
+                    element.classList.remove('btn-success');
+                    element.classList.add('btn-purple');
+                    element.disabled = false;
+                }, 1800);
+            }, 1450);
+        }
+        
+        function submitContactForm(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const origText = btn.innerHTML;
+            
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i> Sending...`;
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = `<i class="fas fa-check me-2"></i> Message Sent!`;
+                btn.classList.add('btn-success');
+                btn.classList.remove('btn-purple');
+                
+                setTimeout(() => {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('contactForm')) || null;
+                    if (modal) modal.hide();
+                    
+                    // Show success toast
+                    const toastHTML = `
+                        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+                            <div class="toast align-items-center text-white bg-purple border-0 show" role="alert" style="background:#5C2D91 !important;">
+                                <div class="d-flex">
+                                    <div class="toast-body">
+                                        <i class="fas fa-check-circle me-2"></i> Thank you! Your message has been received. We will respond within 2 business days.
+                                    </div>
+                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.body.insertAdjacentHTML('beforeend', toastHTML);
+                    
+                    setTimeout(function() {
+                        const toast = document.querySelector('.toast');
+                        if (toast) toast.remove();
+                    }, 4800);
+                    
+                    // Reset form
+                    e.target.reset();
+                    btn.innerHTML = origText;
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-purple');
+                    btn.disabled = false;
+                }, 2100);
+            }, 1950);
+        }
+        
+        // Initialize everything
+        function initializeWebsite() {
+            // Initialize charts
+            initializeCharts();
+            
+            // Navbar active link highlighting
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = ['updates', 'messages', 'learning-areas', 'data-analytics', 'programs', 'resources', 'contact'];
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(sectionId => {
+                    const section = document.getElementById(sectionId);
+                    if (!section) return;
+                    
+                    const sectionTop = section.getBoundingClientRect().top;
+                    if (sectionTop <= 180) {
+                        current = sectionId;
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Smooth scroll for nav links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            const navHeight = 78;
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.scrollY - navHeight;
+                            
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Close mobile nav
+                            const navbarCollapse = document.getElementById('navbarNav');
+                            if (navbarCollapse.classList.contains('show')) {
+                                const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                                bsCollapse.hide();
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Set initial active nav
+            const updatesLink = document.querySelector('a[href="#updates"]');
+            if (updatesLink) updatesLink.classList.add('active');
+            
+            // Random demo badge animation
+            setTimeout(() => {
+                const demoBadges = document.querySelectorAll('.demo-badge');
+                demoBadges.forEach(badge => {
+                    badge.style.transition = 'all 0.4s ease';
+                });
+            }, 1500);
+            
+            // Keyboard accessibility note
+            console.log('%c[CLMD Website] Single-file website initialized successfully. All features are functional.', 'color:#5C2D91');
+            
+            // Optional: Preload a sample learning modal for demo purposes (commented)
+            // setTimeout(() => { /* demo purposes only */ }, 8000);
+        }
+        
+        // Boot the website
+        window.onload = function() {
+            initializeWebsite();
+        }
+        
+        // Expose a few functions for potential console debugging
+        window.CLMD = {
+            showLearningArea: (idx) => showLearningAreaModal(idx),
+            showMessage: (idx) => showFullMessage(idx)
+        };
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a28a00578f9c1082',t:'MTc4NjMxMjQ4Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
